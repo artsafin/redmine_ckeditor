@@ -1,0 +1,8 @@
+button.ck.ck-button {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.ck .ck-editor__editable p, .ck.ck-editor p {
+    padding-left: inherit;
+}

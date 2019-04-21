@@ -1,6 +1,4 @@
 <%= ckeditor_javascripts %>
-<%= stylesheet_link_tag 'editor', :plugin => 'redmine_ckeditor'%>
-<%= stylesheet_link_tag 'selector', :plugin => 'redmine_ckeditor'%>
 <p>
   <%= content_tag :label, l(:ckeditor_skin) %>
   <%= select_tag "settings[skin]", RedmineCkeditor.skin_options %>

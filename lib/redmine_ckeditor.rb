@@ -91,24 +91,10 @@ module RedmineCkeditor
     end
 
     def options(scope_object = nil)
-      scope_type = scope_object && scope_object.class.model_name.name
-      scope_id = scope_object && scope_object.id
-
       skin = RedmineCkeditorSetting.skin
       skin += ",#{assets_root}/ckeditor-contrib/skins/#{skin}/" if skin != "moono-lisa"
 
-      rich_options = Rich.options({
-        :contentsCss => [stylesheet_path("application"), "#{assets_root}/stylesheets/editor.css"],
-        :scoped => scope_object ? true : false,
-        :allow_document_uploads => true,
-        :allow_embeds => true,
-        :default_style => :original,
-        :richBrowserUrl => "#{Redmine::Utils.relative_url_root}/rich/files/"
-      }, scope_type, scope_id)
-      rich_options.delete(:removeDialogTabs)
-      rich_options.delete(:format_tags)
-      rich_options.delete(:stylesSet)
-      rich_options.merge(ckeditor_config.merge({
+      ckeditor_config.merge({
         :skin => skin,
         :uiColor => RedmineCkeditorSetting.ui_color,
         :enterMode => RedmineCkeditorSetting.enter_mode,
@@ -120,7 +106,7 @@ module RedmineCkeditor
         :toolbar => RedmineCkeditorSetting.toolbar,
         :width => RedmineCkeditorSetting.width,
         :height => RedmineCkeditorSetting.height
-      }))
+      })
     end
 
     def enabled?
@@ -133,7 +119,6 @@ module RedmineCkeditor
       ::MailHandler.prepend MailHandlerPatch
       ::MessagesController.prepend MessagesControllerPatch
       ::QueriesController.send :helper, QueriesHelperPatch
-      ::Rich::FilesController.send :helper, RichFilesHelperPatch
     end
   end
 end
@@ -141,7 +126,6 @@ end
 require 'redmine_ckeditor/helper'
 require 'redmine_ckeditor/application_helper_patch'
 require 'redmine_ckeditor/queries_helper_patch'
-require 'redmine_ckeditor/rich_files_helper_patch'
 require 'redmine_ckeditor/journals_controller_patch'
 require 'redmine_ckeditor/messages_controller_patch'
 require 'redmine_ckeditor/mail_handler_patch'

@@ -6,12 +6,12 @@ ActiveSupport::Reloader.to_prepare do
 end
 
 Redmine::Plugin.register :redmine_ckeditor do
-  name 'Redmine CKEditor plugin'
-  author 'Akihiro Ono'
-  description 'This is a CKEditor plugin for Redmine'
-  version '1.2.1'
+  name 'CKEditor 5 for Redmine'
+  author 'Akihiro Ono, Artur Safin'
+  description 'Integration of CKEditor 5 to Redmine'
+  version '2.0.0'
   requires_redmine :version_or_higher => '4.0.0'
-  url 'http://github.com/a-ono/redmine_ckeditor'
+  url 'http://github.com/artsafin/redmine_ckeditor'
 
   settings(:partial => 'settings/ckeditor')
 

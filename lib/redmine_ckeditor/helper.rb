@@ -2,6 +2,12 @@ module RedmineCkeditor
   module Helper
     def ckeditor_javascripts
       root = RedmineCkeditor.assets_root
+
+      javascript_include_tag('ckeditor5-build-classic/build/ckeditor.js', :plugin => "redmine_ckeditor")
+    end
+
+    def ckeditor_javascripts_old
+      root = RedmineCkeditor.assets_root
       plugin_script = RedmineCkeditor.plugins.map {|name|
         "CKEDITOR.plugins.addExternal('#{name}', '#{root}/ckeditor-contrib/plugins/#{name}/');"
       }.join

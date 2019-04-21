@@ -6,6 +6,30 @@ module RedmineCkeditor::WikiFormatting
       <<-EOT
         (function() {
           var textarea = document.getElementById('#{field_id}');
+          var settings = #{RedmineCkeditor.options(@project).to_json};
+          console.log('Installing editor to', textarea, 'with config', settings);
+          if (!textarea) return;
+          
+          console.log('Available plugins', ClassicEditor.builtinPlugins.map( plugin => plugin.pluginName ));
+          
+          ClassicEditor
+              .create(
+                textarea
+              )
+              .then( editor => {
+                  console.log('Editor loaded!', editor);
+              } )
+              .catch( error => {
+                  console.error('Error loading editor', error);
+              } );
+        })();
+      EOT
+    end
+
+    def replace_editor_script_old(field_id, preview_url)
+      <<-EOT
+        (function() {
+          var textarea = document.getElementById('#{field_id}');
           if (!textarea) return;
           new jsToolBar(textarea).setPreviewUrl('#{preview_url}');
           CKEDITOR.replace(textarea, #{RedmineCkeditor.options(@project).to_json});
@@ -14,6 +38,9 @@ module RedmineCkeditor::WikiFormatting
     end
 
     def overwrite_functions
+      ''
+    end
+    def overwrite_functions_old
       <<-EOT
         function showAndScrollTo(id, focus) {
           var elem = $("#" + id);
@@ -56,6 +83,16 @@ module RedmineCkeditor::WikiFormatting
     end
 
     def heads_for_wiki_formatter
+      unless @heads_for_wiki_formatter_included
+        content_for :header_tags do
+          ckeditor_javascripts +
+          stylesheet_link_tag('ck5', :plugin => 'redmine_ckeditor')
+        end
+        @heads_for_wiki_formatter_included = true
+      end
+    end
+
+    def heads_for_wiki_formatter_old
       unless @heads_for_wiki_formatter_included
         content_for :header_tags do
           javascript_include_tag('jstoolbar/jstoolbar') +

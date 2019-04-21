@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rich', git: 'https://github.com/a-ono/rich.git', tag: '1.5.1'
 gem 'kaminari'
 gem 'htmlentities'
 gem 'paperclip', '~> 6.1.0'
